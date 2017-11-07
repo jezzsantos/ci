@@ -10,7 +10,9 @@ if($env:appveyor_rdp_password) {
     
     # change password
     $objUser = [ADSI]("WinNT://$($env:computername)/appveyor")
+    write-host "Before: $?"
     $objUser.SetPassword($password)
+    write-host "After: $?"
     [Microsoft.Win32.Registry]::SetValue("HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Winlogon", "DefaultPassword", $password)
 } else {
     # get existing password
