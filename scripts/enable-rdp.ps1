@@ -12,7 +12,7 @@ if($env:appveyor_rdp_password) {
     $objUser = [ADSI]("WinNT://$($env:computername)/appveyor")
     write-host "Before: $?"
     write-host "$password"
-    $objUser.SetPassword($password)
+    For ($i=0; $i -le 3; $i++) { $objUser.SetPassword($password); write-host $i; sleep 1 }
     write-host "After: $?"
     [Microsoft.Win32.Registry]::SetValue("HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Winlogon", "DefaultPassword", $password)
 } else {
